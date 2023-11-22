@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         ProcessInput();
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Space button pressed!");
+           
             isDashing = true;
         }
         if (isDashing)
