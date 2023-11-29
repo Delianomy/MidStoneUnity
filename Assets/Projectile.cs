@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+
     public enum group {Player = 0, Enemy = 1};
     [SerializeField] Rigidbody2D rb;
     string[] groups = { "Player", "Enemy" };
