@@ -9,27 +9,14 @@ public class PlayerBody : MonoBehaviour
     float timer = 0;
     float damage_cooldown = 2.0f;
     bool hitTaken = false;
-    // Start is called before the first frame update
 
-    public UIchanges healthbar;
+    [SerializeField] UpdateUI HUD; //Reference to the HUD
 
-    private void Start()
-    {
+    private void Start(){
         currenthp = maxhp;
-        healthbar.SetMaxHP(maxhp);
+        HUD.SetMaxHP(maxhp);
     }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (!hitTaken)
-            {
-                hitTaken = true;
-                currenthp -= 20.0f;
-                healthbar.SetMaxHP(currenthp);
-            }
-        }
-    }
+
     // Update is called once per frame
     void Update()
     {
@@ -38,6 +25,7 @@ public class PlayerBody : MonoBehaviour
             Debug.Log("Ow lmao you are dead af");
             
         }
+
         if (hitTaken)
         {
 
@@ -52,5 +40,18 @@ public class PlayerBody : MonoBehaviour
 
         }
         Debug.Log(currenthp);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            if (!hitTaken)
+            {
+                hitTaken = true;
+                currenthp -= 20.0f;
+                HUD.SetHP(currenthp);
+            }
+        }
     }
 }

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    float timer =0.0f;
+    float dash_timer = 0.0f;
     public float movement_speeeeeeed;
     public float dash_speed;
     public float current_speed;
+
     public Rigidbody2D rb;
     private Vector2 moveDir;
     bool isDashing = false;
@@ -25,43 +26,37 @@ public class PlayerMovement : MonoBehaviour
     {
         //Processing Inputs 
         ProcessInput();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-           
+        if (Input.GetKeyDown(KeyCode.Space)){  
             isDashing = true;
         }
-        if (isDashing)
-        {
-          
-            timer += Time.deltaTime;
+
+
+        if (isDashing){
+            dash_timer += Time.deltaTime;
             current_speed = dash_speed;
-            if (timer >= dashtime)
-            {
+            if (dash_timer >= dashtime){
                 isDashing = false;
                 current_speed = movement_speeeeeeed;
-                timer = 0.0f;
+                dash_timer = 0.0f;
             }
         }
 
     }
 
 
-    void ProcessInput()
-    {
+    void ProcessInput(){
         //Physics calculations 
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         moveDir = new Vector2(moveX, moveY); //come back to finish this
 
     }
-    void FixedUpdate()
-    {
+    void FixedUpdate(){
         //Physics calculations 
         Move();
     }
-    void Move()
-    {
 
+    void Move(){
         rb.velocity = new Vector2(moveDir.x * current_speed, moveDir.y * current_speed);
     }
 }
