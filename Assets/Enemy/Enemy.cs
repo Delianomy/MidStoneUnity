@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
+public class Enemy : MonoBehaviour{
+    [Header("Enemy properties")]
+    public float currentHealth = 250.0f;
+
+
+    private void Update()
     {
-        
+        if(currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float damage)
     {
-        
+        currentHealth -= damage; 
     }
 }

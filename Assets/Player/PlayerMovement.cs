@@ -15,10 +15,8 @@ public class PlayerMovement : MonoBehaviour
     public float dashtime = 0.2f;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         current_speed = movement_speeeeeeed;
-
     }
 
     // Update is called once per frame

@@ -39,7 +39,6 @@ public class PlayerBody : MonoBehaviour
             }
 
         }
-        Debug.Log(currenthp);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
