@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7965774247547968534}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 250
-  maxSpeed: 0
+  maxSpeed: 4
 --- !u!114 &7961101792625553637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,7 +120,7 @@ MonoBehaviour:
   drawObstacleRays: 0
   drawLastTargetPos: 0
   drawSphere: 0
-  drawTargetPos: 1
+  drawTargetPos: 0
 --- !u!50 &3220694224571113262
 Rigidbody2D:
   serializedVersion: 4

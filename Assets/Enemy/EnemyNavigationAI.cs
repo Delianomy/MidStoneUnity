@@ -38,6 +38,16 @@ public class EnemyNavigationAI : MonoBehaviour{
         enemy = GetComponent<Enemy>();
         rb = GetComponent<Rigidbody2D>();
         enemyCollider = GetComponent<CircleCollider2D>();
+
+        if(Target == null)
+        {
+            Target = GameObject.FindGameObjectWithTag("Player");
+        }
+
+        if(Obstacle == null)
+        {
+            Obstacle = GameObject.FindGameObjectWithTag("Wall");
+        }
     }
     Vector2 CalculateMoveDir()
     {

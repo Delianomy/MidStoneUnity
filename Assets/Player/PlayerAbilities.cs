@@ -53,21 +53,18 @@ public class PlayerAbilities : MonoBehaviour{
 
              //Melee abilities
              case playerAbilities.Melee:
-                 if (Input.GetMouseButton(0)){ Melee(); }
+                 Melee();
                  break;
                  
-             
              //Shooting abilities
              case playerAbilities.Shoot:
-                 if (Input.GetMouseButton(0)){ Shoot(); }   
+                 Shoot();
                  break;
             
             //Shield abilities
              case playerAbilities.Shield:
-                  
-                  Shield();
-                  break;
-                 
+                 Shield();
+                 break;
         }
     }
 
@@ -106,37 +103,44 @@ public class PlayerAbilities : MonoBehaviour{
     }
 
     void Melee() {
-        Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-        RaycastHit2D[] hitObjects = Physics2D.CircleCastAll(playerPos + mouseDir * meleeDistance, meleeRadius, Vector2.zero);
-        foreach (var Object in hitObjects)
-        {
-            if (Object.collider.gameObject.tag == "Enemy")
+        if (Input.GetMouseButtonDown(0)){
+            
+            Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+            RaycastHit2D[] hitObjects = Physics2D.CircleCastAll(playerPos + mouseDir * meleeDistance, meleeRadius, Vector2.zero);
+            foreach (var Object in hitObjects)
             {
-                Enemy enemyProperties = Object.collider.gameObject.GetComponent<Enemy>();
-                if (enemyProperties == null)
+                if (Object.collider.gameObject.tag == "Enemy")
                 {
-                    Debug.Log("Broke something");
-                    break;
+                    Debug.Log("Ouch");
+                    Enemy enemyProperties = Object.collider.gameObject.GetComponent<Enemy>();
+                    if (enemyProperties == null)
+                    {
+                        Debug.Log("Broke something");
+                        break;
+                    }
+                    enemyProperties.TakeDamage(meleePower);
                 }
-                enemyProperties.TakeDamage(meleePower);
             }
         }
     }
     void Shoot() {
-        Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-        GameObject spawnedProjectile = Instantiate(projectile, playerPos + mouseDir * 2, Quaternion.identity);
-        Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
-        if (spawnedProperties == null)
+        if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Broke something");
-            return;
-        }
+            Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+            GameObject spawnedProjectile = Instantiate(projectile, playerPos + mouseDir * 2, Quaternion.identity);
+            Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
+            if (spawnedProperties == null)
+            {
+                Debug.Log("Broke something");
+                return;
+            }
 
-        spawnedProperties.currentGroup = Projectile.group.Player;
-        spawnedProperties.direction = mouseDir;
-        spawnedProperties.speed = projectileSpeed;
-        spawnedProperties.duration = projectileDuration;
-        spawnedProperties.power = projectilePower;
+            spawnedProperties.currentGroup = Projectile.group.Player;
+            spawnedProperties.direction = mouseDir;
+            spawnedProperties.speed = projectileSpeed;
+            spawnedProperties.duration = projectileDuration;
+            spawnedProperties.power = projectilePower;
+        }
     }
     void Shield() {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !cooldown)

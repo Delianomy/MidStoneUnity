@@ -13,9 +13,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int spawnLimit;
 
     [SerializeField] private int enemy;
+    private BoxCollider2D spawnBounds;
 
     private void Start()
     {
+        spawnBounds = GetComponent<BoxCollider2D>();
         StartCoroutine(Spawner());
     }
     
@@ -29,7 +31,11 @@ public class EnemySpawner : MonoBehaviour
             if (enemy < spawnLimit)
             {
                 enemy++;
-                Instantiate(enemyPrefabs, transform.position, Quaternion.identity);
+                Vector2 spawnPos = new Vector2(
+                    Random.Range(transform.position.x, transform.position.x + spawnBounds.size.x),
+                    Random.Range(transform.position.y, transform.position.y + spawnBounds.size.y)
+                );
+                Instantiate(enemyPrefabs, spawnPos, Quaternion.identity);
             }
 
         }
