@@ -20,12 +20,22 @@ public class PlayerAbilities : MonoBehaviour{
     [SerializeField] float projectileSpeed;
     [SerializeField] float projectileDuration;
 
+
+//  i literally dont know what i'm doing but we gaming?
+    [Header("Shield variables")]
+    [SerializeField] GameObject shieldPrefab;
+    [SerializeField] private float shieldAllowedDistance;
+    [SerializeField] private float shieldPushBackForce; 
+
+
+
     [Header("Debugging")]
     [SerializeField] Vector2 mouseDir;
     // Start is called before the first frame update
     private void OnDrawGizmos(){
         DrawCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) + mouseDir * meleeDistance, meleeRadius);
     }
+
 
     // Update is called once per frame
     void Update(){
@@ -70,7 +80,18 @@ public class PlayerAbilities : MonoBehaviour{
                         break;
                     }
 
+                //  uhhhhhh its a start..?
                 case playerAbilities.Shield: 
+                    GameObject shieldObject = Instantiate(shieldPrefab, playerPos, Quaternion.identity);
+                    Shield shieldProperties = shieldObject.GetComponent<Shield>();
+                    if (shieldProperties == null) {
+                        Debug.Log("Broke something");
+                        break;
+                    }
+
+                    shieldProperties.allowedDistance = shieldAllowedDistance;
+                    shieldProperties.pushBackForce = shieldPushBackForce; 
+
                     break;
             }
         }
@@ -107,4 +128,6 @@ public class PlayerAbilities : MonoBehaviour{
             prevPoint = point;
         }
     }
+
+
 }
