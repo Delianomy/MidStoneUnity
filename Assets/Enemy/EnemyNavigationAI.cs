@@ -123,29 +123,32 @@ public class EnemyNavigationAI : MonoBehaviour{
     }
 
     //Modified ChatGPT code
-    void DrawCircle(Vector3 origin, float radius, int segments)
+    void DrawCircle(Vector3 center, float radius, int segments)
     {
-        for (int i = 0; i < segments; i++)
+        Gizmos.color = Color.green;
+
+        // You can adjust the number of segments for a smoother circle
+        float angleIncrement = 360f / segments;
+
+        Vector3 prevPoint = Vector3.zero;
+
+        for (int i = 0; i <= segments; i++)
         {
-            float angle = i * (360f / segments);
-            float x = origin.x + Mathf.Sin(Mathf.Deg2Rad * angle) * radius;
-            float y = origin.y + Mathf.Cos(Mathf.Deg2Rad * angle) * radius;
+            float angle = Mathf.Deg2Rad * (i * angleIncrement);
+            Vector3 point = center + new Vector3(Mathf.Cos(angle) * radius, Mathf.Sin(angle) * radius, 0);
 
-            Vector3 startPoint = new Vector3(x, y, origin.z);
-            Vector3 direction = (startPoint - origin).normalized;
+            if (i > 0)
+            {
+                Gizmos.DrawLine(prevPoint, point);
+            }
 
-            Debug.DrawRay(origin, direction * radius, Color.magenta, 0.1f);
+            prevPoint = point;
         }
+    }
 
-        // Draw the last segment to close the circle
-        float lastAngle = segments * (360f / segments);
-        float lastX = origin.x + Mathf.Sin(Mathf.Deg2Rad * lastAngle) * radius;
-        float lastY = origin.y + Mathf.Cos(Mathf.Deg2Rad * lastAngle) * radius;
-
-        Vector3 lastPoint = new Vector3(lastX, lastY, origin.z);
-        Vector3 lastDirection = (lastPoint - origin).normalized;
-
-        Debug.DrawRay(origin, lastDirection * radius, Color.magenta, 0.1f);
+    private void OnDrawGizmos()
+    {
+        if (drawSphere) DrawCircle(transform.position, obstacleDetectionRadius, 10);
     }
 
     void Update()
@@ -156,6 +159,6 @@ public class EnemyNavigationAI : MonoBehaviour{
         totalVel = Vector2.ClampMagnitude(totalVel, enemy.maxSpeed);
 
         rb.velocity += totalVel * Time.deltaTime;
-        if(drawSphere) DrawCircle(transform.position, obstacleDetectionRadius, 10);
+       
     }
 }
