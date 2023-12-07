@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7346202741466031345}
   - component: {fileID: 7346202741466031344}
   - component: {fileID: 581751348627316808}
-  - component: {fileID: 4834239461806463079}
+  - component: {fileID: 7961101792625553637}
   - component: {fileID: 3220694224571113262}
-  - component: {fileID: 7701887488458530936}
+  - component: {fileID: 7965774247547968534}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -101,50 +101,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 250
---- !u!60 &4834239461806463079
-PolygonCollider2D:
+  maxSpeed: 0
+--- !u!114 &7961101792625553637
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7346202741466031351}
   m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.55, y: -0.38}
-      - {x: 0.53, y: -0.28}
-      - {x: 0.42, y: -0.19999999}
-      - {x: 0.42, y: 0.25}
-      - {x: 0.42999998, y: 0.42}
-      - {x: 0.25, y: 0.64}
-      - {x: -0.14, y: 0.64}
-      - {x: -0.26, y: 0.61}
-      - {x: -0.35, y: 0.5}
-      - {x: -0.42999998, y: 0.32}
-      - {x: -0.47, y: -0.26}
-      - {x: -0.55, y: -0.37}
-      - {x: -0.55, y: -0.56}
-      - {x: -0.42999998, y: -0.62}
-      - {x: -0.19, y: -0.62}
-      - {x: -0.14999999, y: -0.64}
-      - {x: 0.38, y: -0.64}
-      - {x: 0.5, y: -0.59}
-      - {x: 0.55, y: -0.51}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5873c64c2ec2c36429548ca17312047d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  Obstacle: {fileID: 0}
+  obstacleDetectionRadius: 4
+  drawObstacleRays: 0
+  drawLastTargetPos: 0
+  drawSphere: 0
+  drawTargetPos: 1
 --- !u!50 &3220694224571113262
 Rigidbody2D:
   serializedVersion: 4
@@ -165,18 +141,20 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &7701887488458530936
-MonoBehaviour:
+  m_Constraints: 4
+--- !u!58 &7965774247547968534
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7346202741466031351}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0fe181a375fdaa469d39fdc633238aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  speed: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.64

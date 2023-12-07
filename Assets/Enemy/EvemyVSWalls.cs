@@ -62,7 +62,6 @@ public class EnemyVSWalls : AgentBehaviour
         for (int i = 0; i < result.Length; i++)
         {
             result[i] = Mathf.Clamp01(interest[i] - danger[i]);
-
         }
         for (int i = 0; i < result.Length; i++)
         {

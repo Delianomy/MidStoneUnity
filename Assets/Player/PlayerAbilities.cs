@@ -22,84 +22,56 @@ public class PlayerAbilities : MonoBehaviour{
 
 
 //  i literally dont know what i'm doing but we gaming?
+// I got you king - Adriel
     [Header("Shield variables")]
-    [SerializeField] GameObject shieldPrefab;
-    [SerializeField] private float shieldAllowedDistance;
-    [SerializeField] private float shieldPushBackForce; 
+    [SerializeField] GameObject shieldObject;
+    [SerializeField] private float shieldDuration = 5.0f;
+    [SerializeField] private float shieldCooldown = 10.0f;
 
+    [HideInInspector] public bool activeShield = false;
+    private bool cooldown = false;
 
+    private float shieldTimer = 0.0f;
+    private float shieldCooldownTimer = 0.0f;
 
     [Header("Debugging")]
-    [SerializeField] Vector2 mouseDir;
-    // Start is called before the first frame update
+    [SerializeField] Vector2 mouseDir; //Prints the mouse dir on the inspector
+
     private void OnDrawGizmos(){
         DrawCircle(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y) + mouseDir * meleeDistance, meleeRadius);
     }
 
+    private void Start()
+    {
+        shieldObject.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update(){
         mouseDir = GetMouseDirection();
-        if (Input.GetMouseButtonDown(0)){
-            Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-            switch (currentAbility){
-                case playerAbilities.Melee:
-                    {
-                        RaycastHit2D[] hitObjects = Physics2D.CircleCastAll(playerPos + mouseDir * meleeDistance, meleeRadius, Vector2.zero);
-                        foreach (var Object in hitObjects)
-                        {
-                            if (Object.collider.gameObject.tag == "Enemy")
-                            {
-                                Enemy enemyProperties = Object.collider.gameObject.GetComponent<Enemy>();
-                                if (enemyProperties == null)
-                                {
-                                    Debug.Log("Broke something");
-                                    break;
-                                }
-                                enemyProperties.TakeDamage(meleePower);
-                            }
-                        }
-                        break;
-                    }
-                
-                case playerAbilities.Shoot:
-                    {
-                        GameObject spawnedProjectile = Instantiate(projectile, playerPos + mouseDir * 2, Quaternion.identity);
-                        Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
-                        if (spawnedProperties == null)
-                        {
-                            Debug.Log("Broke something");
-                            break;
-                        }
+        switch (currentAbility){
 
-                        spawnedProperties.currentGroup = Projectile.group.Player;
-                        spawnedProperties.direction = mouseDir;
-                        spawnedProperties.speed = projectileSpeed;
-                        spawnedProperties.duration = projectileDuration;
-                        spawnedProperties.power = projectilePower;
-                        break;
-                    }
-
-                //  uhhhhhh its a start..?
-                case playerAbilities.Shield: 
-                //  i dont know how this works so i made a "Shield2" script that is much simpler to me.
-                //  it just prevents damage from occuring when toggled. nothing fancy.
-                //  this stuff will be removed soon.
-                    GameObject shieldObject = Instantiate(shieldPrefab, playerPos, Quaternion.identity);
-                    Shield shieldProperties = shieldObject.GetComponent<Shield>();
-                    if (shieldProperties == null) {
-                        Debug.Log("Broke something");
-                        break;
-                    }
-
-                    shieldProperties.allowedDistance = shieldAllowedDistance;
-                    shieldProperties.pushBackForce = shieldPushBackForce; 
-
-                    break;
-            }
+             //Melee abilities
+             case playerAbilities.Melee:
+                 if (Input.GetMouseButton(0)){ Melee(); }
+                 break;
+                 
+             
+             //Shooting abilities
+             case playerAbilities.Shoot:
+                 if (Input.GetMouseButton(0)){ Shoot(); }   
+                 break;
+            
+            //Shield abilities
+             case playerAbilities.Shield:
+                  
+                  Shield();
+                  break;
+                 
         }
     }
 
+    //Function to get the direction of the mouse relative to the player
     Vector2 GetMouseDirection(){
         Vector2 mouseScreenPosition = Input.mousePosition;
         Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
@@ -109,6 +81,7 @@ public class PlayerAbilities : MonoBehaviour{
     }
 
     //Chat GPT code
+    //Draws a circle 
     void DrawCircle(Vector3 center, float radius)
     {
         Gizmos.color = Color.green;
@@ -132,5 +105,81 @@ public class PlayerAbilities : MonoBehaviour{
         }
     }
 
+    void Melee() {
+        Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        RaycastHit2D[] hitObjects = Physics2D.CircleCastAll(playerPos + mouseDir * meleeDistance, meleeRadius, Vector2.zero);
+        foreach (var Object in hitObjects)
+        {
+            if (Object.collider.gameObject.tag == "Enemy")
+            {
+                Enemy enemyProperties = Object.collider.gameObject.GetComponent<Enemy>();
+                if (enemyProperties == null)
+                {
+                    Debug.Log("Broke something");
+                    break;
+                }
+                enemyProperties.TakeDamage(meleePower);
+            }
+        }
+    }
+    void Shoot() {
+        Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        GameObject spawnedProjectile = Instantiate(projectile, playerPos + mouseDir * 2, Quaternion.identity);
+        Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
+        if (spawnedProperties == null)
+        {
+            Debug.Log("Broke something");
+            return;
+        }
 
+        spawnedProperties.currentGroup = Projectile.group.Player;
+        spawnedProperties.direction = mouseDir;
+        spawnedProperties.speed = projectileSpeed;
+        spawnedProperties.duration = projectileDuration;
+        spawnedProperties.power = projectilePower;
+    }
+    void Shield() {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !cooldown)
+        {
+            if (!activeShield)
+            {
+                shieldObject.SetActive(true);
+                activeShield = true;
+                shieldTimer = 0;
+            }
+            else
+            {
+                shieldObject.SetActive(false);
+                activeShield = false;
+                shieldTimer = 0;
+                cooldown = true;
+            }
+        }
+
+        if (activeShield)
+        {
+            shieldTimer += Time.deltaTime;
+            Debug.Log("shield active, (active for " + Mathf.Round((shieldDuration - shieldTimer)) + ")");
+
+            if (shieldTimer >= shieldDuration)
+            {
+                shieldObject.SetActive(false);
+                activeShield = false;
+                shieldTimer = 0.0f;
+                cooldown = true;
+            }
+        }
+
+        if (cooldown)
+        {
+            shieldCooldownTimer += Time.deltaTime;
+            Debug.Log("On cooldown, (active for " + Mathf.Round((shieldCooldown - shieldCooldownTimer)) + ")");
+
+            if (shieldCooldownTimer >= shieldCooldown)
+            {
+                cooldown = false;
+                shieldCooldownTimer = 0.0f;
+            }
+        }
+    }
 }
