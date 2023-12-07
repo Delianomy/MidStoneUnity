@@ -9,7 +9,6 @@ public class Shield : MonoBehaviour
 
 public float allowedDistance = 5.0f;
 public float pushBackForce = 10.0f;
-
 private void OnTriggerEnter2D(Collider2D other){
     if(other.tag == "Enemy"){
     float distanceToEnemy = Vector2.Distance(transform.position, other.transform.position);

@@ -10,11 +10,18 @@ public class PlayerBody : MonoBehaviour
     float damage_cooldown = 2.0f;
     bool hitTaken = false;
 
+
+    //  im making the shield an invicibility thing for now. no damage allowed when shielding.
+    private Shield2 shield;
+
+
     [SerializeField] UpdateUI HUD; //Reference to the HUD
 
     private void Start(){
         currenthp = maxhp;
         HUD.SetMaxHP(maxhp);
+
+        shield = GetComponent<Shield2>();
     }
 
     // Update is called once per frame
@@ -43,14 +50,17 @@ public class PlayerBody : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            if (!hitTaken)
+        if(!shield.ActiveShield){
+            if (collision.gameObject.CompareTag("Enemy"))
             {
-                hitTaken = true;
-                currenthp -= 20.0f;
-                HUD.SetHP(currenthp);
+                if (!hitTaken)
+                {
+                    hitTaken = true;
+                    currenthp -= 20.0f;
+                    HUD.SetHP(currenthp);
+                }
             }
         }
     }
+
 }

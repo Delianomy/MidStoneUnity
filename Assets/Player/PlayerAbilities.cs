@@ -82,6 +82,9 @@ public class PlayerAbilities : MonoBehaviour{
 
                 //  uhhhhhh its a start..?
                 case playerAbilities.Shield: 
+                //  i dont know how this works so i made a "Shield2" script that is much simpler to me.
+                //  it just prevents damage from occuring when toggled. nothing fancy.
+                //  this stuff will be removed soon.
                     GameObject shieldObject = Instantiate(shieldPrefab, playerPos, Quaternion.identity);
                     Shield shieldProperties = shieldObject.GetComponent<Shield>();
                     if (shieldProperties == null) {
