@@ -1064,7 +1064,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1187342529}
   - component: {fileID: 1187342530}
-  - component: {fileID: 1187342531}
   m_Layer: 0
   m_Name: shield
   m_TagString: Untagged
@@ -1139,19 +1138,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1187342531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1187342528}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cc336ad339f5614aa2b22f4cf9bb972, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shieldObject: {fileID: 1187342528}
 --- !u!1 &1197865038
 GameObject:
   m_ObjectHideFlags: 0
