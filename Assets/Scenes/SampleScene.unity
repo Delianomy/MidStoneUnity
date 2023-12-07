@@ -1217,6 +1217,7 @@ MonoBehaviour:
   projectilePower: 50
   projectileSpeed: 5
   projectileDuration: 3
+  shield: {fileID: 1211039351135865647, guid: d042b63c510a6b14fa9ee652bd6c72a4, type: 3}
   mouseDir: {x: 0, y: 0}
 --- !u!60 &1197865046
 PolygonCollider2D:
