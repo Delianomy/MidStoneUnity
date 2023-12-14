@@ -16,4 +16,4 @@ MonoBehaviour:
   totalTime: 0
   score: 0
   killCount: 0
-  room: 0
+  room: 1

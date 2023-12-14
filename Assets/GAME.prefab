@@ -877,7 +877,7 @@ MonoBehaviour:
   roomHud: {fileID: 2899686963428639734}
   score: 0
   killCount: 0
-  room: 0
+  room: 1
   exitPortal: {fileID: 3599380073170694155}
 --- !u!1 &6434209970351878014
 GameObject:

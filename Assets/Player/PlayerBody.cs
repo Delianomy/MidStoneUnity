@@ -20,7 +20,6 @@ public class PlayerBody : MonoBehaviour
     [SerializeField] UpdateUI HUD; //Reference to the HUD
 
     private void Start(){
-        currenthp = maxhp;
         HUD.SetMaxHP(maxhp);
 
         shield = GetComponent<PlayerAbilities>();
@@ -49,6 +48,8 @@ public class PlayerBody : MonoBehaviour
             }
 
         }
+
+        HUD.SetHP(currenthp);
     }
 
     private void OnCollisionStay2D(Collision2D collision)
