@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour{
         {
             Destroy(gameObject);
             gameManager.killCount += 1;
+            gameManager.score += 50;
         }
     }
 

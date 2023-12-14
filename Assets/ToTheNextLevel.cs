@@ -10,6 +10,7 @@ public class ToTheNextLevel : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player")) {
             gameManager.ChangeScene("Room_1");
+            gameManager.score += 100;
         }
     }
 }

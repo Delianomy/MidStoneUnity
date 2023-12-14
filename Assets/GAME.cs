@@ -11,9 +11,13 @@ public class GAME : MonoBehaviour
     [SerializeField] PlayerBody player;
     [SerializeField] InterScene interSceneData;
     [SerializeField] TextMeshProUGUI timerHud;
+    [SerializeField] TextMeshProUGUI scoreHud;
+    [SerializeField] TextMeshProUGUI killHud;
+    [SerializeField] TextMeshProUGUI roomHud;
     float elapsedTime = 0;
     public int score = 0;
     public int killCount = 0;
+    public int room = 1;
 
     [Header("Switching rooms")]
     [SerializeField] GameObject exitPortal;
@@ -23,17 +27,26 @@ public class GAME : MonoBehaviour
         exitPortal.SetActive(false);
         player.currenthp = interSceneData.playerHealth;
         elapsedTime = interSceneData.totalTime;
+        score = interSceneData.score;
+        killCount = interSceneData.killCount;
+        room = interSceneData.room;
     }
+
 
 
     // Update is called once per frame
     void Update()
     {
+        //Hud stuff
         elapsedTime += Time.deltaTime;
         int hour = Mathf.FloorToInt(elapsedTime / 3600);
         int minutes = Mathf.FloorToInt(elapsedTime / 60);
         int seconds = Mathf.FloorToInt(elapsedTime % 60);
         timerHud.text = string.Format("{0:00} : {1:00} : {2:00}", hour, minutes, seconds);
+
+        scoreHud.text = "Score " + score;
+        killHud.text = "Kill " + killCount;
+        roomHud.text = "Room " + room;
     }
 
     public void ChangeScene(string sceneName) {
@@ -41,7 +54,7 @@ public class GAME : MonoBehaviour
         interSceneData.totalTime = elapsedTime;
         interSceneData.score = score;
         interSceneData.killCount = killCount;
-        interSceneData.rooms += 1;
+        interSceneData.room += 1;
         SceneManager.LoadScene(sceneName);
     }
 

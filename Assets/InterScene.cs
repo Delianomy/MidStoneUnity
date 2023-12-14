@@ -9,5 +9,5 @@ public class InterScene : ScriptableObject{
     public float totalTime = 0;
     public int score = 0;
     public int killCount = 0;
-    public int rooms = 0;
+    public int room = 1;
 }
