@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-
+    //Who does this projectile belong to
     public enum group {Player = 0, Enemy = 1};
     [SerializeField] Rigidbody2D rb;
     string[] groups = { "Player", "Enemy" };
@@ -32,15 +32,6 @@ public class Projectile : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == groups[(int)currentGroup]) {
-            return;
-        }
-
-        if(other.gameObject.tag == groups[(int)group.Player])
-        {
-
-        }
-
         if (other.gameObject.tag == groups[(int)group.Enemy]){
             Enemy enemyProperties = other.gameObject.GetComponent<Enemy>();
             if(enemyProperties == null) { Destroy(gameObject); }
@@ -56,6 +47,7 @@ public class Projectile : MonoBehaviour
     }
 
     void UpdateTimer(){
+        //Update the timer with deltaTime cause coroutines are kinda scary ngl
         durationTimer += Time.deltaTime;
         if(durationTimer >= duration) {
             Destroy(gameObject);

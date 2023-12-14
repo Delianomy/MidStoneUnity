@@ -876,7 +876,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1008,6 +1008,7 @@ MonoBehaviour:
   sfx: {fileID: 395917348}
   background: {fileID: 8300000, guid: 55216da65901c024e923b69550fa7172, type: 3}
   death: {fileID: 8300000, guid: 696ae47956ab4cc4c9862815bd86be8e, type: 3}
+  levelWon: {fileID: 0}
 --- !u!4 &549583703
 Transform:
   m_ObjectHideFlags: 0

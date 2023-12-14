@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
             isDashing = true;
         }
 
-
+        //Dash logic
         if (isDashing){
             dash_timer += Time.deltaTime;
             current_speed = dash_speed;
@@ -47,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        //Make the camera follow the player only when it exits 
         if(cam != null) {
             cam.transform.position = gameObject.transform.position;
         }
@@ -75,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = new Vector2(moveDir.x * current_speed, moveDir.y * current_speed);
     }
 
+    //Animation
     void PlayAnimation(){
         //Forgive me lord for what I'm about to do
 

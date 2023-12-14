@@ -974,6 +974,7 @@ MonoBehaviour:
   sfx: {fileID: 1398955669}
   background: {fileID: 8300000, guid: 55216da65901c024e923b69550fa7172, type: 3}
   death: {fileID: 8300000, guid: 696ae47956ab4cc4c9862815bd86be8e, type: 3}
+  levelWon: {fileID: 0}
 --- !u!4 &1273668698
 Transform:
   m_ObjectHideFlags: 0
@@ -2059,7 +2060,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0

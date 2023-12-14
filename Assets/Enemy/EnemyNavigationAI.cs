@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
+//Yes I copied this from my Lab05 (don't judge pls)
 public class EnemyNavigationAI : MonoBehaviour{
     Enemy enemy;
     [SerializeField] GameObject Target;
@@ -83,6 +84,7 @@ public class EnemyNavigationAI : MonoBehaviour{
             }
         }
 
+        //Calculate the resulting vector
         Vector2 resultDir = new Vector2();
         for (int i = 0; i < result.Length; i++)
         {
@@ -90,6 +92,7 @@ public class EnemyNavigationAI : MonoBehaviour{
 
         }
 
+        
         for (int i = 0; i < result.Length; i++)
         {
             resultDir += directions[i] * result[i];
@@ -132,7 +135,7 @@ public class EnemyNavigationAI : MonoBehaviour{
         }
     }
 
-    //Modified ChatGPT code
+    //Modified ChatGPT code to draw a circle for debugging purposes 
     void DrawCircle(Vector3 center, float radius, int segments)
     {
         Gizmos.color = Color.green;
@@ -169,6 +172,9 @@ public class EnemyNavigationAI : MonoBehaviour{
         totalVel = Vector2.ClampMagnitude(totalVel, enemy.maxSpeed);
 
         rb.velocity += totalVel * Time.deltaTime;
+
+        //Flip the image based on their velocity
+        //They will face left if they are moving left
         float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
         int flipX = (Mathf.Abs(angle) > 90) ? -1 : 1;
         transform.localScale = new Vector3(flipX * 2.5f, 2.5f, 2.5f);

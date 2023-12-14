@@ -28,6 +28,7 @@ public class PlayerBody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //When the player dies
         if (currenthp <= 0) {
             currenthp = 0;
             GameManager.ChangeScene("Result");
@@ -35,6 +36,7 @@ public class PlayerBody : MonoBehaviour
             
         }
 
+        //If the player took a hit, activate invincibility frames
         if (hitTaken)
         {
 

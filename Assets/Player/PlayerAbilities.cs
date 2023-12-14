@@ -131,10 +131,12 @@ public class PlayerAbilities : MonoBehaviour{
 
     void Melee() {
         if (Input.GetMouseButtonDown(0)){
+            //Casts a circle at the direction of the mouse
             Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
             RaycastHit2D[] hitObjects = Physics2D.CircleCastAll(playerPos + mouseDir * meleeDistance, meleeRadius, Vector2.zero);
             foreach (var Object in hitObjects)
             {
+                //If an enemy is in it, they get hurt
                 if (Object.collider.gameObject.tag == "Enemy")
                 {
                     slash.Play();
@@ -156,6 +158,7 @@ public class PlayerAbilities : MonoBehaviour{
     void Shoot() {
         if (Input.GetMouseButtonDown(0))
         {
+            //Spawns a projectile at the direction of the mouse
             Vector2 spawnPos = new Vector2(attackAnimationObject.transform.position.x, attackAnimationObject.transform.position.y);
             GameObject spawnedProjectile = Instantiate(projectile, spawnPos + mouseDir, Quaternion.identity);
             Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
@@ -167,6 +170,8 @@ public class PlayerAbilities : MonoBehaviour{
             }
 
             shoot.Play();
+
+            //Changes the projectile's stats
             spawnedProperties.currentGroup = Projectile.group.Player;
             spawnedProperties.direction = mouseDir;
             spawnedProperties.speed = projectileSpeed;
@@ -180,6 +185,7 @@ public class PlayerAbilities : MonoBehaviour{
     void Shield() {
         if (Input.GetKeyDown(KeyCode.LeftShift) && !cooldown)
         {
+            //Activates the shield
             if (!activeShield)
             {
                 shield.Play();
@@ -187,6 +193,8 @@ public class PlayerAbilities : MonoBehaviour{
                 activeShield = true;
                 shieldTimer = 0;
             }
+
+            //Deactivates the shield when the player presses Shift again
             else
             {
                 shieldObject.SetActive(false);
@@ -196,6 +204,7 @@ public class PlayerAbilities : MonoBehaviour{
             }
         }
 
+        //Shield logic
         if (activeShield)
         {
             shieldTimer += Time.deltaTime;
@@ -210,6 +219,7 @@ public class PlayerAbilities : MonoBehaviour{
             }
         }
 
+        //Handles the shield cooldown
         if (cooldown)
         {
             shieldCooldownTimer += Time.deltaTime;

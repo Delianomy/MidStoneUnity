@@ -45,6 +45,7 @@ public class ResultScreen : MonoBehaviour
         sceneData.playerHealth = 150.0f;
         sceneData.killCount = 0;
         sceneData.totalTime = 0;
+        sceneData.score = 0;
         sceneData.room = 1;
     }
 }
