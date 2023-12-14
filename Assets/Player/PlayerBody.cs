@@ -15,6 +15,7 @@ public class PlayerBody : MonoBehaviour
     private PlayerAbilities shield;
 
 
+
     [SerializeField] UpdateUI HUD; //Reference to the HUD
 
     private void Start(){

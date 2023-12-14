@@ -14,6 +14,10 @@ public class PlayerMovement : MonoBehaviour
     bool isDashing = false;
     public float dashtime = 0.2f;
 
+    //Animation stuff
+    private Animator animator;
+    [SerializeField] Vector2 playerDirection = Vector2.zero;
+
     // Start is called before the first frame update
     void Start(){
         current_speed = movement_speeeeeeed;
@@ -41,6 +45,9 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    private void LateUpdate(){
+        
+    }
 
     void ProcessInput(){
         //Physics calculations 
@@ -48,6 +55,9 @@ public class PlayerMovement : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical");
         moveDir = new Vector2(moveX, moveY); //come back to finish this
 
+        if(moveDir.magnitude > 0){
+            playerDirection = moveDir;
+        }
     }
     void FixedUpdate(){
         //Physics calculations 
