@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour{
 
     public AudioSource slash;
+    public AudioSource shoot;
+    public AudioSource shield;
     enum playerAbilities { Melee, Shoot, Shield }
     [Header("Player Abilities")]
     [SerializeField] playerAbilities currentAbility;
@@ -133,10 +136,12 @@ public class PlayerAbilities : MonoBehaviour{
             Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
             if (spawnedProperties == null)
             {
+                
                 Debug.Log("Broke something");
                 return;
             }
 
+            shoot.Play();
             spawnedProperties.currentGroup = Projectile.group.Player;
             spawnedProperties.direction = mouseDir;
             spawnedProperties.speed = projectileSpeed;
@@ -149,6 +154,7 @@ public class PlayerAbilities : MonoBehaviour{
         {
             if (!activeShield)
             {
+                shield.Play();
                 shieldObject.SetActive(true);
                 activeShield = true;
                 shieldTimer = 0;
