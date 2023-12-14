@@ -57,7 +57,8 @@ public class PlayerBody : MonoBehaviour
                 if (!hitTaken)
                 {
                     hitTaken = true;
-                    currenthp -= 20.0f;
+                    Enemy enemyStuff = collision.gameObject.GetComponent<Enemy>();
+                    currenthp -= enemyStuff.power;
                     HUD.SetHP(currenthp);
                 }
             }

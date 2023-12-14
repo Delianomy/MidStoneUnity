@@ -169,6 +169,9 @@ public class EnemyNavigationAI : MonoBehaviour{
         totalVel = Vector2.ClampMagnitude(totalVel, enemy.maxSpeed);
 
         rb.velocity += totalVel * Time.deltaTime;
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x) * Mathf.Rad2Deg;
+        int flipX = (Mathf.Abs(angle) > 90) ? -1 : 1;
+        transform.localScale = new Vector3(flipX * 2.5f, 2.5f, 2.5f);
        
     }
 }

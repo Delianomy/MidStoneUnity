@@ -657,7 +657,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 4
   m_Sprite: {fileID: 457978879, guid: 822e2b118fa3a9c40892fdabe79ed592, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement_speeeeeeed: 10
-  dash_speed: 30
+  dash_speed: 20
   current_speed: 0
   rb: {fileID: 669021947551288143}
   dashtime: 0.5
@@ -745,7 +745,7 @@ MonoBehaviour:
   meleeRadius: 1.5
   projectile: {fileID: 6866772123352438375, guid: 66c095294f0c04742932b23c23f53d0f, type: 3}
   projectilePower: 50
-  projectileSpeed: 5
+  projectileSpeed: 20
   projectileDuration: 3
   shieldObject: {fileID: 669021947557616576}
   shieldDuration: 5
