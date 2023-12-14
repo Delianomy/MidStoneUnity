@@ -5,23 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class ToTheNextLevel : MonoBehaviour
 {
-    // Start is called before the first frame update
-    bool levelWon = false;
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.V)) {
-            Debug.Log("Door open");
-            levelWon = true;
-        }
-    }
+    [SerializeField] GAME gameManager;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-        if (collision.gameObject.CompareTag("Player") && levelWon == true) {
-            SceneManager.LoadScene("Scene2");
-            Debug.Log("Won");
+        if (collision.gameObject.CompareTag("Player")) {
+            gameManager.ChangeScene("Room_1");
         }
     }
 }

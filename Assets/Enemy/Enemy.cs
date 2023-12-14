@@ -7,10 +7,11 @@ public class Enemy : MonoBehaviour{
     public float currentHealth = 250.0f;
     public float maxSpeed;
     private SpriteRenderer spriteRenderer;
+    GAME gameManager;
 
-    private void Awake()
-    {
+    private void Awake(){
         spriteRenderer = GetComponent<SpriteRenderer>();
+        gameManager = GameObject.FindGameObjectWithTag("GAME").GetComponent<GAME>();
     }
 
     private void Update()
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour{
         if(currentHealth <= 0)
         {
             Destroy(gameObject);
+            gameManager.killCount += 1;
         }
     }
 

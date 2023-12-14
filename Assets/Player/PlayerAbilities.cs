@@ -154,7 +154,7 @@ public class PlayerAbilities : MonoBehaviour{
         }
     }
     void Shoot() {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector2 spawnPos = new Vector2(attackAnimationObject.transform.position.x, attackAnimationObject.transform.position.y);
             GameObject spawnedProjectile = Instantiate(projectile, spawnPos + mouseDir, Quaternion.identity);

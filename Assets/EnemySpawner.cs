@@ -13,11 +13,15 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int spawnLimit;
 
     [SerializeField] private int enemy;
-    private BoxCollider2D spawnBounds;
+    [SerializeField] GameObject[] possibleSpawnPos;
+
+    public bool roomCompleted = false;
+    List<GameObject> spawnedEnemies = new List<GameObject>();
+
+    [SerializeField] GAME GameManager;
 
     private void Start()
     {
-        spawnBounds = GetComponent<BoxCollider2D>();
         StartCoroutine(Spawner());
     }
     
@@ -31,15 +35,28 @@ public class EnemySpawner : MonoBehaviour
             if (enemy < spawnLimit)
             {
                 enemy++;
-                Vector2 spawnPos = new Vector2(
-                    Random.Range(transform.position.x, transform.position.x + spawnBounds.size.x),
-                    Random.Range(transform.position.y, transform.position.y + spawnBounds.size.y)
-                );
-                Instantiate(enemyPrefabs, spawnPos, Quaternion.identity);
+                Vector2 spawnPos = possibleSpawnPos[Random.Range(0, possibleSpawnPos.Length)].transform.position;
+
+                spawnedEnemies.Add(Instantiate(enemyPrefabs, spawnPos, Quaternion.identity));
             }
 
         }
 
         
+    }
+
+    private void FixedUpdate() {
+        int deadEnemies = 0;
+        for(int i = 0; i < spawnedEnemies.Count; i++) {
+            if (spawnedEnemies[i] == null) {
+                deadEnemies += 1;
+            }
+        }
+
+        if(deadEnemies >= spawnLimit) { 
+            roomCompleted = true;
+            GameManager.OpenExitPortal();
+        }
+
     }
 }
