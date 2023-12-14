@@ -15,12 +15,16 @@ public class PlayerMovement : MonoBehaviour
     public float dashtime = 0.2f;
 
     //Animation stuff
-    private Animator animator;
+    [SerializeField] Animator animator;
     [SerializeField] Vector2 playerDirection = Vector2.zero;
+
+    //Camera follow the player
+    Camera cam;
 
     // Start is called before the first frame update
     void Start(){
         current_speed = movement_speeeeeeed;
+        cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -43,10 +47,13 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if(cam != null) {
+            cam.transform.position = gameObject.transform.position;
+        }
     }
 
     private void LateUpdate(){
-        
+        PlayAnimation();
     }
 
     void ProcessInput(){
@@ -66,6 +73,56 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(){
         rb.velocity = new Vector2(moveDir.x * current_speed, moveDir.y * current_speed);
+    }
+
+    void PlayAnimation(){
+        //Forgive me lord for what I'm about to do
+
+        //The player is moving
+        if(moveDir.magnitude > 0){
+            //Up
+            if (playerDirection.x == 0 && playerDirection.y == 1) {
+                animator.Play("player_walk_up");
+            }
+
+            //Down
+            if (playerDirection.x == 0 && playerDirection.y == -1) {
+                animator.Play("player_walk_down");
+            }
+
+            //Left
+            if (playerDirection.x == -1 && playerDirection.y == 0) {
+                animator.Play("player_walk_left");
+            }
+
+            //Right
+            if (playerDirection.x == 1 && playerDirection.y == 0) {
+                animator.Play("player_walk_right");
+            }
+        }
+
+        //The player is not moving
+        else{
+            //Up
+            if (playerDirection.x == 0 && playerDirection.y == 1) {
+                animator.Play("player_idle_up");
+            }
+
+            //Down
+            if (playerDirection.x == 0 && playerDirection.y == -1) {
+                animator.Play("player_idle_down");
+            }
+
+            //Left
+            if (playerDirection.x == -1 && playerDirection.y == 0) {
+                animator.Play("player_idle_left");
+            }
+
+            //Right
+            if (playerDirection.x == 1 && playerDirection.y == 0) {
+                animator.Play("player_idle_right");
+            }
+        }
     }
 }
 

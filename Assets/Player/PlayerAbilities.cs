@@ -38,6 +38,10 @@ public class PlayerAbilities : MonoBehaviour{
     private float shieldTimer = 0.0f;
     private float shieldCooldownTimer = 0.0f;
 
+    [Header("Animation Stuff")]
+    [SerializeField] GameObject attackAnimationObject;
+    private Animator weaponRenderObject;
+
     [Header("Debugging")]
     [SerializeField] Vector2 mouseDir; //Prints the mouse dir on the inspector
 
@@ -48,28 +52,47 @@ public class PlayerAbilities : MonoBehaviour{
     private void Start()
     {
         shieldObject.SetActive(false);
+        weaponRenderObject = attackAnimationObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update(){
+        //Input stuff
+        if(Input.GetKeyDown(KeyCode.J)) {
+            currentAbility = playerAbilities.Melee;
+            weaponRenderObject.Play("attack_sword");
+        }
+        if (Input.GetKeyDown(KeyCode.K)) {
+            currentAbility = playerAbilities.Shoot;
+            weaponRenderObject.Play("attack_gun");
+        }
+
         mouseDir = GetMouseDirection();
+
+        //Animation stuff
+        Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+        Vector2 drawPos = playerPos + mouseDir * (meleeDistance - 1);
+        attackAnimationObject.transform.position = drawPos;
+        float angle = Mathf.Atan2(mouseDir.y, mouseDir.x) * 180 / Mathf.PI;
+        attackAnimationObject.transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        //flipping the rendered sprite 
+        float xScale = (Mathf.Abs(angle) > 90) ? -1 : 1;
+        attackAnimationObject.transform.localScale = new Vector3(1, xScale, 1);
+
         switch (currentAbility){
 
              //Melee abilities
              case playerAbilities.Melee:
-                 Melee();
-                 break;
+                Melee();
+                break;
                  
              //Shooting abilities
              case playerAbilities.Shoot:
-                 Shoot();
-                 break;
-            
-            //Shield abilities
-             case playerAbilities.Shield:
-                 Shield();
-                 break;
+                Shoot();
+                break;
         }
+        Shield();
     }
 
     //Function to get the direction of the mouse relative to the player
@@ -108,7 +131,6 @@ public class PlayerAbilities : MonoBehaviour{
 
     void Melee() {
         if (Input.GetMouseButtonDown(0)){
-            
             Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
             RaycastHit2D[] hitObjects = Physics2D.CircleCastAll(playerPos + mouseDir * meleeDistance, meleeRadius, Vector2.zero);
             foreach (var Object in hitObjects)
@@ -126,13 +148,16 @@ public class PlayerAbilities : MonoBehaviour{
                     enemyProperties.TakeDamage(meleePower);
                 }
             }
+
+            //Animation stuff
+            weaponRenderObject.Play("attack_slash");
         }
     }
     void Shoot() {
         if (Input.GetMouseButtonDown(1))
         {
-            Vector2 playerPos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-            GameObject spawnedProjectile = Instantiate(projectile, playerPos + mouseDir * 2, Quaternion.identity);
+            Vector2 spawnPos = new Vector2(attackAnimationObject.transform.position.x, attackAnimationObject.transform.position.y);
+            GameObject spawnedProjectile = Instantiate(projectile, spawnPos + mouseDir, Quaternion.identity);
             Projectile spawnedProperties = spawnedProjectile.GetComponent<Projectile>();
             if (spawnedProperties == null)
             {
@@ -147,6 +172,9 @@ public class PlayerAbilities : MonoBehaviour{
             spawnedProperties.speed = projectileSpeed;
             spawnedProperties.duration = projectileDuration;
             spawnedProperties.power = projectilePower;
+
+            //More animation stuff
+            weaponRenderObject.Play("attack_shoot");
         }
     }
     void Shield() {

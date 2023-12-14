@@ -24,6 +24,11 @@ public class Projectile : MonoBehaviour
     void Update(){
         UpdateTimer();
         rb.velocity = direction * speed;
+
+        //Update the rotation
+        float angle = Mathf.Atan2(rb.velocity.y, rb.velocity.x);
+        angle *= 180 / Mathf.PI;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -43,8 +48,11 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if(other.gameObject.tag == "Wall") {
+            Destroy(gameObject);
+        }
 
-        Destroy(gameObject);
+        
     }
 
     void UpdateTimer(){
