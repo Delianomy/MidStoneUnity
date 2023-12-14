@@ -4,11 +4,11 @@ using UnityEngine;
 
 
 public struct EnemyProperties {
+  
     public float power;
     public float maxSpeed;
     public float currentHealth;
     public int imageIndex;
-
     public EnemyProperties(float power_, float maxSpeed_, float currentHealth_, int imageIndex_) {
         power = power_;
         maxSpeed = maxSpeed_;
@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour{
     public float power = 20.0f;
     GAME gameManager;
     [SerializeField]Sprite[] sprites;
+    AudioManager audioManager;
+
 
     Dictionary<int, EnemyProperties> enemyList = new Dictionary<int, EnemyProperties>() {
         { 0, new EnemyProperties(10, 3, 100, 0)},
@@ -38,6 +40,7 @@ public class Enemy : MonoBehaviour{
     }
 
     private void Awake(){
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         gameManager = GameObject.FindGameObjectWithTag("GAME").GetComponent<GAME>();
         RandomizeStats();
@@ -47,6 +50,7 @@ public class Enemy : MonoBehaviour{
     {
         if(currentHealth <= 0)
         {
+            audioManager.PlaySFX(audioManager.death);
             Destroy(gameObject);
             gameManager.killCount += 1;
             gameManager.score += 50;
