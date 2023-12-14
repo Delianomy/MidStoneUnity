@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour{
 
+    public AudioSource slash;
     enum playerAbilities { Melee, Shoot, Shield }
     [Header("Player Abilities")]
     [SerializeField] playerAbilities currentAbility;
@@ -111,6 +112,7 @@ public class PlayerAbilities : MonoBehaviour{
             {
                 if (Object.collider.gameObject.tag == "Enemy")
                 {
+                    slash.Play();
                     Debug.Log("Ouch");
                     Enemy enemyProperties = Object.collider.gameObject.GetComponent<Enemy>();
                     if (enemyProperties == null)
