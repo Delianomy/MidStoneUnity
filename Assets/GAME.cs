@@ -42,7 +42,7 @@ public class GAME : MonoBehaviour
         int hour = Mathf.FloorToInt(elapsedTime / 3600);
         int minutes = Mathf.FloorToInt(elapsedTime / 60);
         int seconds = Mathf.FloorToInt(elapsedTime % 60);
-        timerHud.text = string.Format("{0:00} : {1:00} : {2:00}", hour, minutes, seconds);
+        timerHud.text = string.Format("{0:00}:{1:00}:{2:00}", hour, minutes, seconds);
 
         scoreHud.text = "Score " + score;
         killHud.text = "Kill " + killCount;
@@ -54,8 +54,10 @@ public class GAME : MonoBehaviour
         interSceneData.totalTime = elapsedTime;
         interSceneData.score = score;
         interSceneData.killCount = killCount;
-        interSceneData.room += 1;
-        SceneManager.LoadScene(sceneName);
+        if (sceneName != "Result"{
+            interSceneData.room += 1;
+        }
+            SceneManager.LoadScene(sceneName);
     }
 
     public void OpenExitPortal() {
