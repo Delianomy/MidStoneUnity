@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ResultScreen : MonoBehaviour
 {
-    InterScene sceneData;
+    [SerializeField] InterScene sceneData;
     [SerializeField] TextMeshProUGUI time;
     [SerializeField] TextMeshProUGUI rooms;
     [SerializeField] TextMeshProUGUI score;
@@ -30,9 +31,20 @@ public class ResultScreen : MonoBehaviour
         kills.text = "Kills " + sceneData.killCount;
     }
 
+    public void GoToMainMenu() {
+        ResetData();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GoAgain() {
+        ResetData();
+        SceneManager.LoadScene("Room_1");
+    }
+
     private void ResetData() {
-        sceneData.playerHealth = 250.0f;
+        sceneData.playerHealth = 150.0f;
         sceneData.killCount = 0;
         sceneData.totalTime = 0;
+        sceneData.room = 1;
     }
 }

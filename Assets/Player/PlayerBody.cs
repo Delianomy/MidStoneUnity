@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerBody : MonoBehaviour
 {
+    [SerializeField] GAME GameManager;
     public float maxhp = 150;
     public float currenthp;
     float timer = 0;
@@ -30,6 +31,7 @@ public class PlayerBody : MonoBehaviour
     {
         if (currenthp <= 0) {
             currenthp = 0;
+            GameManager.ChangeScene("Result");
             Debug.Log("Ow lmao you are dead af");
             
         }

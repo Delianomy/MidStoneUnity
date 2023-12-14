@@ -54,10 +54,10 @@ public class GAME : MonoBehaviour
         interSceneData.totalTime = elapsedTime;
         interSceneData.score = score;
         interSceneData.killCount = killCount;
-        if (sceneName != "Result"{
+        if (sceneName != "Result"){
             interSceneData.room += 1;
         }
-            SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OpenExitPortal() {
